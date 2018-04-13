@@ -44,7 +44,7 @@ void print_deque( DEQUE_T *deque)
 
 int main(int argc , char **argv)
 {
-    DEQUE_T *deque = deque_constructor(sizeof(String), 5);
+    DEQUE_T *deque = new_deque(sizeof(String), 5);
 
     for (;;)
     {
@@ -83,7 +83,7 @@ int main(int argc , char **argv)
         /* destroy */
         else if ( !strncmp(line , "des" , 3) )
         {
-            deque_destructor( deque);
+            delete_deque( deque);
             printf("WARNING: the deque has been destroyed, followed with SEGMENT-FAULT probably\n");
         }
 

@@ -65,11 +65,11 @@ typedef struct
  * @param   count        : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-DEQUE_T *deque_constructor(int item_size, int count);
+DEQUE_T *new_deque(int item_size, int count);
 
 
 /* Destroy deque */
-void deque_destructor(DEQUE_T *deque);
+void delete_deque(DEQUE_T *deque);
 
 
 /* Lock the deque */

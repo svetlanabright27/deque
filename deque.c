@@ -41,7 +41,7 @@
  * @param   count        : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-DEQUE_T *deque_constructor(int item_size, int count)
+DEQUE_T *new_deque(int item_size, int count)
 {
     DEQUE_T *deque = malloc(sizeof(DEQUE_T));
 
@@ -78,7 +78,7 @@ fail1:
 
 
 /* Destroy deque */
-void deque_destructor(DEQUE_T *deque)
+void delete_deque(DEQUE_T *deque)
 {
     pthread_mutex_destroy(&deque->mutex);
     free(deque->data);
