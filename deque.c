@@ -163,14 +163,14 @@ int deque_push_back(DEQUE_T *deque, const void *data)
     /* We cannot insert when queue is full */
     if (deque_is_full(deque))
     {
-        return DEQUE_FAILURE;
+        return EXIT_FAILURE;
     }
 
     ptr += deque->end * deque->item_size;
     memcpy(ptr, data, deque->item_size);
     deque->end = (deque->end + 1) % deque->count;
 
-    return DEQUE_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 
@@ -188,14 +188,14 @@ int deque_pop_front(DEQUE_T *deque, void *data)
     /* We cannot pop when queue is empty */
     if (deque_is_empty(deque))
     {
-        return DEQUE_FAILURE;
+        return EXIT_FAILURE;
     }
 
     ptr += deque->begin * deque->item_size;
     memcpy(data, ptr, deque->item_size);
     deque->begin = (deque->begin + 1) % deque->count;
 
-    return DEQUE_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 /**

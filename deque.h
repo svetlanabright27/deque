@@ -55,9 +55,6 @@ typedef struct
 } DEQUE_T;
 
 
-#define DEQUE_SUCCESS    0u
-#define DEQUE_FAILURE    1u
-
 
 /**
  * @brief   Initialize deque

@@ -81,10 +81,10 @@ int main(int argc , char **argv)
             printf("pop %s\n" , tmp.str);
         }
         /* destroy */
-        else if ( !strncmp(line , "des" , 3) )
+        else if ( !strncmp(line , "del" , 3) )
         {
             delete_deque( deque);
-            printf("WARNING: the deque has been destroyed, followed with SEGMENT-FAULT probably\n");
+            printf("WARNING: the deque has been deleted, followed with SEGMENT-FAULT probably\n");
         }
 
         print_deque(deque);
