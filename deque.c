@@ -150,6 +150,15 @@ void *deque_iterator_inc(DEQUE_T *deque, void *ptr)
 
 
 /**
+ * @brief   flush a deque
+ * @param   deque : the deque...
+ */
+void deque_flush(DEQUE_T *deque)
+{
+    deque->begin = deque->end = 0;
+}
+
+/**
  * @brief   push a element to the back of a deque
  * @param   deque : the deque...
  * @param   data  : pointer to the data to push

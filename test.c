@@ -80,6 +80,13 @@ int main(int argc , char **argv)
             deque_unlock(deque);
             printf("pop %s\n" , tmp.str);
         }
+        /* flush the deque */
+        else if ( !strncmp(line, "flush", 5) )
+        {
+            deque_lock(deque);
+            deque_flush(deque);
+            deque_unlock(deque);
+        }
         /* destroy */
         else if ( !strncmp(line , "del" , 3) )
         {
