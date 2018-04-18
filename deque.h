@@ -112,7 +112,7 @@ void *deque_iterator_inc(DEQUE_T *deque, void *ptr);
 void deque_flush(DEQUE_T *deque);
 
 /**
- * @brief   push a element to the back of a deque(no element in fact)
+ * @brief   push a element to the back of a deque
  * @param   deque : the deque...
  * @param   data  : pointer to the data to push
  * @return  0: success
@@ -120,7 +120,10 @@ void deque_flush(DEQUE_T *deque);
  */
 int deque_push_back(DEQUE_T *deque, const void *data);
 
-
+/**
+ * @note upcoming...
+ */
+int deque_push_front(DEQUE_T *deque, const void *data);
 
 /**
  * @brief   pop a element from the front of a deque
@@ -131,6 +134,10 @@ int deque_push_back(DEQUE_T *deque, const void *data);
  */
 int deque_pop_front(DEQUE_T *deque, void *data);
 
+/**
+ * @note upcoming...
+ */
+int deque_pop_back(DEQUE_T *deque, void *data);
 
 
 /**
