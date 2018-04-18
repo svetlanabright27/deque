@@ -4,8 +4,11 @@ A deque implementation in C supposed to be similar with deque in STL
 ## available interfaces:
 
 ```C
+/* constructor and destructor */
 DEQUE_T * new_deque(int item_size, int count);
-void   delete_deque(DEQUE_T *deque);
+void      delete_deque(DEQUE_T *deque);
+
+/* user interfaces */
 void   deque_lock(DEQUE_T *deque);
 void   deque_unlock(DEQUE_T *deque);
 void * deque_begin(const DEQUE_T *deque);
