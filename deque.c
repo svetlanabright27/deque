@@ -1,4 +1,4 @@
-/*
+/**
  * @brief    Common deque support functions
  *
  * @author   lycon
