@@ -16,6 +16,12 @@
 #include <pthread.h>
 
 
+#ifndef  EXIT_SUCCESS
+#define  EXIT_SUCCESS  0
+#endif
+#ifndef  EXIT_FAILURE
+#define  EXIT_FAILURE  1
+#endif
 
 
 /**
@@ -79,14 +85,14 @@ void *deque_end(const Deque *deque);
  * @param   ptr   : the pointer to increase
  * @return  pointer increased
  */
-void *deque_iterator_inc(Deque *deque, void *ptr);
+void *deque_iter_inc(Deque *deque, void *ptr);
 
 
 /**
  * @brief   flush a deque
  * @param   deque : the deque...
  */
-void deque_flush(Deque *deque);
+void deque_clear(Deque *deque);
 
 /**
  * @brief   push a element to the back of a deque
@@ -98,7 +104,11 @@ void deque_flush(Deque *deque);
 int deque_push_back(Deque *deque, const void *data);
 
 /**
- * @note upcoming...
+ * @brief   push a element to the front of a deque
+ * @param   deque : the deque...
+ * @param   data  : pointer to the data to push
+ * @return  0: success
+            1: failure
  */
 int deque_push_front(Deque *deque, const void *data);
 
@@ -112,7 +122,11 @@ int deque_push_front(Deque *deque, const void *data);
 int deque_pop_front(Deque *deque, void *data);
 
 /**
- * @note upcoming...
+ * @brief   pop a element from the back of a deque
+ * @param   deque : the deque...
+ * @param   data  : pointer to store the data pop
+ * @return  0: success
+            1: failure
  */
 int deque_pop_back(Deque *deque, void *data);
 
@@ -130,7 +144,7 @@ int deque_size(const Deque *deque);
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is full, otherwise 0
  */
-int deque_is_full(const Deque *deque);
+int deque_full(const Deque *deque);
 
 
 
@@ -139,7 +153,7 @@ int deque_is_full(const Deque *deque);
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is empty, otherwise 0
  */
-int deque_is_empty(const Deque *deque);
+int deque_empty(const Deque *deque);
 
 
 /**

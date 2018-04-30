@@ -86,7 +86,7 @@ void *deque_begin(const Deque *deque)
 {
     char *ptr = (char *)deque->data;
 
-    if (deque_is_empty(deque))
+    if (deque_empty(deque))
     {
         return NULL;
     }
@@ -103,7 +103,7 @@ void *deque_end(const Deque *deque)
 {
     char *ptr = (char *)deque->data;
 
-    if (deque_is_empty(deque))
+    if (deque_empty(deque))
     {
         return NULL;
     }
@@ -117,7 +117,7 @@ void *deque_end(const Deque *deque)
  * @param   ptr   : the pointer to increase
  * @return  pointer increased
  */
-void *deque_iterator_inc(Deque *deque, void *ptr)
+void *deque_iter_inc(Deque *deque, void *ptr)
 {
     char *p_data = deque->data;
     int index = ((char *)ptr - p_data) / deque->item_size;
@@ -127,12 +127,36 @@ void *deque_iterator_inc(Deque *deque, void *ptr)
 
 
 /**
- * @brief   flush a deque
+ * @brief   clear a deque
  * @param   deque : the deque...
  */
-void deque_flush(Deque *deque)
+void deque_clear(Deque *deque)
 {
     deque->begin = deque->end = 0;
+}
+
+/**
+ * @brief   push a element to the front of a deque
+ * @param   deque : the deque...
+ * @param   data  : pointer to the data to push
+ * @return  0: success
+            1: failure
+ */
+int deque_push_front(Deque *deque, const void *data)
+{
+    char *ptr = deque->data;
+
+    /* We cannot insert when queue is full */
+    if (deque_full(deque))
+    {
+        return EXIT_FAILURE;
+    }
+
+    deque->begin = (deque->begin + deque->count - 1) % deque->count;
+    ptr += deque->begin * deque->item_size;
+    memcpy(ptr, data, deque->item_size);
+
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -147,7 +171,7 @@ int deque_push_back(Deque *deque, const void *data)
     char *ptr = deque->data;
 
     /* We cannot insert when queue is full */
-    if (deque_is_full(deque))
+    if (deque_full(deque))
     {
         return EXIT_FAILURE;
     }
@@ -172,7 +196,7 @@ int deque_pop_front(Deque *deque, void *data)
     char *ptr = deque->data;
 
     /* We cannot pop when queue is empty */
-    if (deque_is_empty(deque))
+    if (deque_empty(deque))
     {
         return EXIT_FAILURE;
     }
@@ -180,6 +204,31 @@ int deque_pop_front(Deque *deque, void *data)
     ptr += deque->begin * deque->item_size;
     memcpy(data, ptr, deque->item_size);
     deque->begin = (deque->begin + 1) % deque->count;
+
+    return EXIT_SUCCESS;
+}
+
+
+/**
+ * @brief   pop a element from the back of a deque
+ * @param   deque : the deque...
+ * @param   data  : pointer to store the data pop
+ * @return  0: success
+            1: failure
+ */
+int deque_pop_back(Deque *deque, void *data)
+{
+    char *ptr = deque->data;
+
+    /* We cannot pop when queue is empty */
+    if (deque_empty(deque))
+    {
+        return EXIT_FAILURE;
+    }
+
+    deque->end = (deque->end + deque->count - 1) % deque->count;
+    ptr += deque->end * deque->item_size;
+    memcpy(data, ptr, deque->item_size);
 
     return EXIT_SUCCESS;
 }
@@ -199,7 +248,7 @@ int deque_size(const Deque *deque)
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is full, otherwise 0
  */
-int deque_is_full(const Deque *deque)
+int deque_full(const Deque *deque)
 {
     return deque_size(deque) == (deque->count - 1);
 }
@@ -209,7 +258,7 @@ int deque_is_full(const Deque *deque)
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is empty, otherwise 0
  */
-int deque_is_empty(const Deque *deque)
+int deque_empty(const Deque *deque)
 {
     return !deque_size(deque);
 }
