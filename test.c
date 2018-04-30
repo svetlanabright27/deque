@@ -9,7 +9,7 @@ typedef struct
 } String;
 
 
-void print_deque( DEQUE_T *deque)
+void print_deque( Deque *deque)
 {
     String *p;
 
@@ -44,7 +44,7 @@ void print_deque( DEQUE_T *deque)
 
 int main(int argc , char **argv)
 {
-    DEQUE_T *deque = new_deque(sizeof(String), 5);
+    Deque *deque = new_deque(sizeof(String), 5);
 
     for (;;)
     {

@@ -29,7 +29,7 @@ typedef struct
     volatile unsigned int begin;
     volatile unsigned int end;
     pthread_mutex_t mutex;
-} DEQUE_T;
+} Deque;
 
 
 
@@ -39,19 +39,19 @@ typedef struct
  * @param   count        : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-DEQUE_T *new_deque(int item_size, int count);
+Deque *new_deque(int item_size, int count);
 
 
 /* Destroy deque */
-void delete_deque(DEQUE_T *deque);
+void delete_deque(Deque *deque);
 
 
 /* Lock the deque */
-void deque_lock(DEQUE_T *deque);
+void deque_lock(Deque *deque);
 
 
 /* Lock the deque */
-void deque_unlock(DEQUE_T *deque);
+void deque_unlock(Deque *deque);
 
 
 
@@ -60,7 +60,7 @@ void deque_unlock(DEQUE_T *deque);
  * @param   deque    : the deque...
  * @return  pointer to the element
  */
-void *deque_begin(const DEQUE_T *deque);
+void *deque_begin(const Deque *deque);
 
 
 
@@ -69,7 +69,7 @@ void *deque_begin(const DEQUE_T *deque);
  * @param   deque    : the deque...
  * @return  pointer to the element
  */
-void *deque_end(const DEQUE_T *deque);
+void *deque_end(const Deque *deque);
 
 
 
@@ -79,14 +79,14 @@ void *deque_end(const DEQUE_T *deque);
  * @param   ptr   : the pointer to increase
  * @return  pointer increased
  */
-void *deque_iterator_inc(DEQUE_T *deque, void *ptr);
+void *deque_iterator_inc(Deque *deque, void *ptr);
 
 
 /**
  * @brief   flush a deque
  * @param   deque : the deque...
  */
-void deque_flush(DEQUE_T *deque);
+void deque_flush(Deque *deque);
 
 /**
  * @brief   push a element to the back of a deque
@@ -95,12 +95,12 @@ void deque_flush(DEQUE_T *deque);
  * @return  0: success
             1: failure
  */
-int deque_push_back(DEQUE_T *deque, const void *data);
+int deque_push_back(Deque *deque, const void *data);
 
 /**
  * @note upcoming...
  */
-int deque_push_front(DEQUE_T *deque, const void *data);
+int deque_push_front(Deque *deque, const void *data);
 
 /**
  * @brief   pop a element from the front of a deque
@@ -109,12 +109,12 @@ int deque_push_front(DEQUE_T *deque, const void *data);
  * @return  0: success
             1: failure
  */
-int deque_pop_front(DEQUE_T *deque, void *data);
+int deque_pop_front(Deque *deque, void *data);
 
 /**
  * @note upcoming...
  */
-int deque_pop_back(DEQUE_T *deque, void *data);
+int deque_pop_back(Deque *deque, void *data);
 
 
 /**
@@ -122,7 +122,7 @@ int deque_pop_back(DEQUE_T *deque, void *data);
  * @param   deque    : Pointer to deque
  * @return  count of elements
  */
-int deque_size(const DEQUE_T *deque);
+int deque_size(const Deque *deque);
 
 
 /**
@@ -130,7 +130,7 @@ int deque_size(const DEQUE_T *deque);
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is full, otherwise 0
  */
-int deque_is_full(const DEQUE_T *deque);
+int deque_is_full(const Deque *deque);
 
 
 
@@ -139,7 +139,7 @@ int deque_is_full(const DEQUE_T *deque);
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is empty, otherwise 0
  */
-int deque_is_empty(const DEQUE_T *deque);
+int deque_is_empty(const Deque *deque);
 
 
 /**
