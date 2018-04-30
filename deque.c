@@ -18,7 +18,7 @@
  * @param   count        : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-Deque *new_deque(int item_size, int count)
+Deque * __new_deque(int item_size, int count)
 {
     Deque *deque = malloc(sizeof(Deque));
 

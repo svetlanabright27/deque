@@ -39,13 +39,16 @@ typedef struct
 
 
 
+
 /**
  * @brief   Initialize deque
- * @param   item_size    : Size of each element item size
- * @param   count        : Size of deque(amount of elements)
+ * @param   type    : type of element
+ * @param   count   : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-Deque *new_deque(int item_size, int count);
+#define new_deque(type, count) \
+    __new_deque(sizeof(type), count)
+Deque * __new_deque(int item_size, int count);
 
 
 /* Destroy deque */

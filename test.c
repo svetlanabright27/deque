@@ -44,7 +44,7 @@ void print_deque( Deque *deque)
 
 int main(int argc , char **argv)
 {
-    Deque *deque = new_deque(sizeof(String), 5);
+    Deque *deque = new_deque(String, 5);
 
     for (;;)
     {

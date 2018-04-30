@@ -5,7 +5,7 @@ A deque implementation in C supposed to be similar with deque in STL
 
 ```C
 /* constructor and destructor */
-Deque * new_deque(int item_size, int count);
+Deque * new_deque( <type> , int count);
 void    delete_deque(Deque *deque);
 
 /* user interfaces */
