@@ -18,19 +18,16 @@
  * @param   count        : Size of deque(amount of elements)
  * @return  pointer to the deque initialized
  */
-Deque * __new_deque(int item_size, int count)
-{
-    Deque *deque = malloc(sizeof(Deque));
+Deque * __new_deque(int item_size, int count) {
+    Deque * deque = malloc(sizeof(Deque));
 
-    if ( !deque )
-    {
+    if ( !deque ) {
         goto fail1;
     }
 
     deque->data = malloc((count + 1) * item_size);
 
-    if (!deque->data)
-    {
+    if (!deque->data) {
         goto fail2;
     }
 
@@ -39,8 +36,7 @@ Deque * __new_deque(int item_size, int count)
     deque->begin = 0;
     deque->end = 0;
 
-    if (pthread_mutex_init(&deque->mutex, NULL))
-    {
+    if (pthread_mutex_init(&deque->mutex, NULL)) {
         goto fail3;
     }
 
@@ -55,23 +51,20 @@ fail1:
 
 
 /* Destroy deque */
-void delete_deque(Deque *deque)
-{
+void delete_deque(Deque * deque) {
     pthread_mutex_destroy(&deque->mutex);
     free(deque->data);
     free(deque);
 }
 
 /* Lock the deque */
-void deque_lock(Deque *deque)
-{
+void deque_lock(Deque * deque) {
     pthread_mutex_lock(&deque->mutex);
 }
 
 
 /* Lock the deque */
-void deque_unlock(Deque *deque)
-{
+void deque_unlock(Deque * deque) {
     pthread_mutex_unlock(&deque->mutex);
 }
 
@@ -82,12 +75,10 @@ void deque_unlock(Deque *deque)
  * @param   deque    : the deque...
  * @return  pointer to the element
  */
-void *deque_begin(const Deque *deque)
-{
-    char *ptr = (char *)deque->data;
+void * deque_begin(const Deque * deque) {
+    char * ptr = (char *)deque->data;
 
-    if (deque_empty(deque))
-    {
+    if (deque_empty(deque)) {
         return NULL;
     }
 
@@ -99,12 +90,10 @@ void *deque_begin(const Deque *deque)
  * @param   deque    : the deque...
  * @return  pointer to the element
  */
-void *deque_end(const Deque *deque)
-{
-    char *ptr = (char *)deque->data;
+void * deque_end(const Deque * deque) {
+    char * ptr = (char *)deque->data;
 
-    if (deque_empty(deque))
-    {
+    if (deque_empty(deque)) {
         return NULL;
     }
 
@@ -117,9 +106,8 @@ void *deque_end(const Deque *deque)
  * @param   ptr   : the pointer to increase
  * @return  pointer increased
  */
-void *deque_iter_inc(Deque *deque, void *ptr)
-{
-    char *p_data = deque->data;
+void * deque_iter_inc(Deque * deque, void * ptr) {
+    char * p_data = deque->data;
     int index = ((char *)ptr - p_data) / deque->item_size;
     index = (index + 1) % deque->count;
     return p_data + index * deque->item_size;
@@ -130,8 +118,7 @@ void *deque_iter_inc(Deque *deque, void *ptr)
  * @brief   clear a deque
  * @param   deque : the deque...
  */
-void deque_clear(Deque *deque)
-{
+void deque_clear(Deque * deque) {
     deque->begin = deque->end = 0;
 }
 
@@ -142,13 +129,11 @@ void deque_clear(Deque *deque)
  * @return  0: success
             1: failure
  */
-int deque_push_front(Deque *deque, const void *data)
-{
-    char *ptr = deque->data;
+int deque_push_front(Deque * deque, const void * data) {
+    char * ptr = deque->data;
 
     /* We cannot insert when queue is full */
-    if (deque_full(deque))
-    {
+    if (deque_full(deque)) {
         return EXIT_FAILURE;
     }
 
@@ -166,13 +151,11 @@ int deque_push_front(Deque *deque, const void *data)
  * @return  0: success
             1: failure
  */
-int deque_push_back(Deque *deque, const void *data)
-{
-    char *ptr = deque->data;
+int deque_push_back(Deque * deque, const void * data) {
+    char * ptr = deque->data;
 
     /* We cannot insert when queue is full */
-    if (deque_full(deque))
-    {
+    if (deque_full(deque)) {
         return EXIT_FAILURE;
     }
 
@@ -191,13 +174,11 @@ int deque_push_back(Deque *deque, const void *data)
  * @return  0: success
             1: failure
  */
-int deque_pop_front(Deque *deque, void *data)
-{
-    char *ptr = deque->data;
+int deque_pop_front(Deque * deque, void * data) {
+    char * ptr = deque->data;
 
     /* We cannot pop when queue is empty */
-    if (deque_empty(deque))
-    {
+    if (deque_empty(deque)) {
         return EXIT_FAILURE;
     }
 
@@ -216,13 +197,11 @@ int deque_pop_front(Deque *deque, void *data)
  * @return  0: success
             1: failure
  */
-int deque_pop_back(Deque *deque, void *data)
-{
-    char *ptr = deque->data;
+int deque_pop_back(Deque * deque, void * data) {
+    char * ptr = deque->data;
 
     /* We cannot pop when queue is empty */
-    if (deque_empty(deque))
-    {
+    if (deque_empty(deque)) {
         return EXIT_FAILURE;
     }
 
@@ -238,8 +217,7 @@ int deque_pop_back(Deque *deque, void *data)
  * @param   deque    : Pointer to deque
  * @return  count of elements
  */
-int deque_size(const Deque *deque)
-{
+int deque_size(const Deque * deque) {
     return (deque->end + deque->count - deque->begin) % deque->count;
 }
 
@@ -248,8 +226,7 @@ int deque_size(const Deque *deque)
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is full, otherwise 0
  */
-int deque_full(const Deque *deque)
-{
+int deque_full(const Deque * deque) {
     return deque_size(deque) == (deque->count - 1);
 }
 
@@ -258,8 +235,7 @@ int deque_full(const Deque *deque)
  * @param   deque    : Pointer to deque
  * @return  1 if the deque is empty, otherwise 0
  */
-int deque_empty(const Deque *deque)
-{
+int deque_empty(const Deque * deque) {
     return !deque_size(deque);
 }
 
