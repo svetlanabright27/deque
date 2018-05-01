@@ -1,10 +1,6 @@
-all: a.out
 
-a.out: test.o deque.o
+a.out: test.c  deque.c deque.h
 	gcc -lpthread $^ -o $@
 
-%.o: %.c
-	gcc -Wall -c $< -o $@
-
 clean:
-	rm -f a.out *.o
+	rm -f a.out 
