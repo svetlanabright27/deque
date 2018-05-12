@@ -19,7 +19,12 @@
  * @return  pointer to the deque initialized
  */
 Deque * __new_deque(int item_size, int count) {
-    Deque * deque = malloc(sizeof(Deque));
+    Deque * deque;
+
+    if(count < 2) {
+        return NULL;
+    }
+    deque = malloc(sizeof(Deque));
 
     if ( !deque ) {
         goto fail1;
