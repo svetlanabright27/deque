@@ -2,8 +2,8 @@
  * @brief    Common deque support functions
  *
  * @author   lycon
- * @blog     https://lk361115629.github.io/
- * @github   https://github.com/lk361115629
+ * @blog     https://hellolycon.github.io/
+ * @github   https://github.com/helloLycon
  *
  */
 
