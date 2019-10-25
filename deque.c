@@ -1,247 +1,163 @@
-/**
- * @brief    Common deque support functions
- *
- * @author   lycon
- * @blog     https://hellolycon.github.io/
- * @github   https://github.com/helloLycon
- *
- */
-
-#include "deque.h"
-
-
-
-
-/**
- * @brief   Initialize deque
- * @param   item_size    : Size of each element
- * @param   count        : Size of deque(amount of elements)
- * @return  pointer to the deque initialized
- */
-Deque * __new_deque(int item_size, int count) {
-    Deque * deque;
-
-    if(count < 2) {
-        return NULL;
+#include<stdio.h>
+struct deque
+{
+    int front;
+    int rear;
+    int q[20];
+};
+int n;
+void inf(struct deque *p)
+{
+    int it,nxt;
+    printf("item:");
+    scanf("%d",&it);
+    if(p->front==-1 && p->rear==-1)
+    {
+        p->front=n-1;
+        p->rear=n-1;
+        p->q[p->front]=it;
+        return;
     }
-    deque = malloc(sizeof(Deque));
-
-    if ( !deque ) {
-        goto fail1;
+    else if(p->front==0)
+    {
+        nxt=n-1;
     }
-
-    deque->data = malloc((count + 1) * item_size);
-
-    if (!deque->data) {
-        goto fail2;
+    else
+    {
+        nxt=p->front-1;
     }
-
-    deque->count = count + 1;
-    deque->item_size = item_size;
-    deque->begin = 0;
-    deque->end = 0;
-
-    if (pthread_mutex_init(&deque->mutex, NULL)) {
-        goto fail3;
+    if(nxt!=p->rear)
+    {
+        p->front=nxt;
+        p->q[p->front]=it;
     }
-
-    return deque;
-fail3:
-    free(deque->data);
-fail2:
-    free(deque);
-fail1:
-    return NULL;
-}
-
-
-/* Destroy deque */
-void delete_deque(Deque * deque) {
-    pthread_mutex_destroy(&deque->mutex);
-    free(deque->data);
-    free(deque);
-}
-
-/* Lock the deque */
-void deque_lock(Deque * deque) {
-    pthread_mutex_lock(&deque->mutex);
-}
-
-
-/* Lock the deque */
-void deque_unlock(Deque * deque) {
-    pthread_mutex_unlock(&deque->mutex);
-}
-
-
-
-/**
- * @brief   get pointer to the begin element
- * @param   deque    : the deque...
- * @return  pointer to the element
- */
-void * deque_begin(const Deque * deque) {
-    char * ptr = (char *)deque->data;
-
-    if (deque_empty(deque)) {
-        return NULL;
+    else
+    {
+        if(nxt==p->rear)
+        printf("queue is full");
     }
-
-    return ptr + deque->begin * deque->item_size;
 }
-
-/**
- * @brief   get pointer to the end element(no element in fact)
- * @param   deque    : the deque...
- * @return  pointer to the element
- */
-void * deque_end(const Deque * deque) {
-    char * ptr = (char *)deque->data;
-
-    if (deque_empty(deque)) {
-        return NULL;
+void disp(struct deque *p)
+{
+    if(p->rear==-1 && p->front==-1){
+        printf("empty");
+        return;
     }
-
-    return ptr + deque->end * deque->item_size;
-}
-
-/**
- * @brief   increase the iterator(pointer) to element of deque
- * @param   deque : the deque...
- * @param   ptr   : the pointer to increase
- * @return  pointer increased
- */
-void * deque_iter_inc(Deque * deque, void * ptr) {
-    char * p_data = deque->data;
-    int index = ((char *)ptr - p_data) / deque->item_size;
-    index = (index + 1) % deque->count;
-    return p_data + index * deque->item_size;
-}
-
-
-/**
- * @brief   clear a deque
- * @param   deque : the deque...
- */
-void deque_clear(Deque * deque) {
-    deque->begin = deque->end = 0;
-}
-
-/**
- * @brief   push a element to the front of a deque
- * @param   deque : the deque...
- * @param   data  : pointer to the data to push
- * @return  0: success
-            1: failure
- */
-int deque_push_front(Deque * deque, const void * data) {
-    char * ptr = deque->data;
-
-    /* We cannot insert when queue is full */
-    if (deque_full(deque)) {
-        return EXIT_FAILURE;
+    int i;
+    if(p->front<=p->rear){
+    for(i=p->front;i<=(p->rear);i++)
+    {
+        printf("%d ",p->q[i]);
     }
+    }
+    else
+    {
+    for(i=p->front;i!=(p->rear);i=(i+1)%n)
+    {
+        printf("%d ",p->q[i]);
+    }
+    printf("%d ",p->q[i]);
+    }
+}
+void inr(struct deque *p)
+{
+    int it,nxt;
+    printf("item:");
+    scanf("%d",&it);
+    if(p->front==-1 && p->rear==-1)
+    {
+        p->front=0;
+        p->rear=0;
+        p->q[p->rear]=it;
+        return;
 
-    deque->begin = (deque->begin + deque->count - 1) % deque->count;
-    ptr += deque->begin * deque->item_size;
-    memcpy(ptr, data, deque->item_size);
+    }
+    else
+    {
+        nxt=(p->rear+1)%n;
+        if(nxt!=p->front)
+        {
+            p->rear=nxt;
+            p->q[p->rear]=it;
+        }
+        else
+        {
+            printf("queue is full");
+        }
+    }
+}
+void df(struct deque *p)
+{
+    int it;
+    if(p->front==-1)
+    {
+        printf("queue empty");
+    }
+    else
+    {
+        it=p->q[p->front];
+        if(p->front==p->rear)
+        {
+            p->front=-1;
+            p->rear=-1;
+        }
+        else
+        {
+            p->front=(p->front+1)%n;
+        }
 
-    return EXIT_SUCCESS;
+    printf("\nremoved item:%d",it);}
+}
+void dr(struct deque *p)
+{
+    int it;
+    it=p->q[p->rear];
+    if(p->rear==-1)
+    {
+        printf("queue empty");
+        return;
+    }
+    else
+    {
+        if(p->rear==p->front)
+        {
+            p->rear=-1;
+            p->front=-1;
+        }
+        else
+        {
+            p->rear--;
+        }
+        printf("removed:%d",it);
+}
 }
 
-/**
- * @brief   push a element to the back of a deque
- * @param   deque : the deque...
- * @param   data  : pointer to the data to push
- * @return  0: success
-            1: failure
- */
-int deque_push_back(Deque * deque, const void * data) {
-    char * ptr = deque->data;
 
-    /* We cannot insert when queue is full */
-    if (deque_full(deque)) {
-        return EXIT_FAILURE;
+void main()
+{
+    struct deque p;
+    p.rear=-1;
+    p.front=-1;
+    int ch;
+    printf("size:");
+    scanf("%d",&n);
+    while(1){
+    printf("\n1.Insertion at front\n2.insertion at rear\n3.deletion at front\n4.deletion at rear\n5.display\n");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:inf(&p);
+        break;
+        case 2:inr(&p);
+        break;
+        case 3:df(&p);
+        break;
+        case 4:dr(&p);
+        break;
+        case 5:disp(&p);
+        break;
+        case 6:return;
+    }
     }
 
-    ptr += deque->end * deque->item_size;
-    memcpy(ptr, data, deque->item_size);
-    deque->end = (deque->end + 1) % deque->count;
-
-    return EXIT_SUCCESS;
 }
-
-
-/**
- * @brief   pop a element from the front of a deque
- * @param   deque : the deque...
- * @param   data  : pointer to store the data pop
- * @return  0: success
-            1: failure
- */
-int deque_pop_front(Deque * deque, void * data) {
-    char * ptr = deque->data;
-
-    /* We cannot pop when queue is empty */
-    if (deque_empty(deque)) {
-        return EXIT_FAILURE;
-    }
-
-    ptr += deque->begin * deque->item_size;
-    memcpy(data, ptr, deque->item_size);
-    deque->begin = (deque->begin + 1) % deque->count;
-
-    return EXIT_SUCCESS;
-}
-
-
-/**
- * @brief   pop a element from the back of a deque
- * @param   deque : the deque...
- * @param   data  : pointer to store the data pop
- * @return  0: success
-            1: failure
- */
-int deque_pop_back(Deque * deque, void * data) {
-    char * ptr = deque->data;
-
-    /* We cannot pop when queue is empty */
-    if (deque_empty(deque)) {
-        return EXIT_FAILURE;
-    }
-
-    deque->end = (deque->end + deque->count - 1) % deque->count;
-    ptr += deque->end * deque->item_size;
-    memcpy(data, ptr, deque->item_size);
-
-    return EXIT_SUCCESS;
-}
-
-/**
- * @brief   Return size of deque
- * @param   deque    : Pointer to deque
- * @return  count of elements
- */
-int deque_size(const Deque * deque) {
-    return (deque->end + deque->count - deque->begin) % deque->count;
-}
-
-/**
- * @brief   Return full status of deque
- * @param   deque    : Pointer to deque
- * @return  1 if the deque is full, otherwise 0
- */
-int deque_full(const Deque * deque) {
-    return deque_size(deque) == (deque->count - 1);
-}
-
-/**
- * @brief   Return empty status of deque
- * @param   deque    : Pointer to deque
- * @return  1 if the deque is empty, otherwise 0
- */
-int deque_empty(const Deque * deque) {
-    return !deque_size(deque);
-}
-
-
